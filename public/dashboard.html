@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RADARS</title>
+  <link rel="stylesheet" href="dashstyles.css">
+  
+  
+ 
+</head>
+<body>
+  <header>
+    <h1>RADARS</h1>
+    <div id="userInfo">
+      <span id="userName"></span>
+      <button id="logoutBtn">Logout</button>
+    </div>
+  </header>
+  
+  <main>
+    <div class="button-container">
+      <button id="carInfoBtn">Car Info</button>
+      <button id="sensorDataBtn">Sensor Data</button>
+      <button id="location">Device location</button>
+      
+    </div>
+    <div id="dataDisplay">
+      <h2 id="dataTitle"></h2>
+      <div id="dataContent"></div>
+      
+      
+    </div>
+  </main>
+
+  <!-- Import Firebase and App JS -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location</title>
+    <link rel="stylesheet" href="map_styles.css"> <!-- Link to the CSS file -->
+</head>
+<body>
+    <h1>Device Location </h1>
+    <p>Manaul Search </p>
+
+    <label for="latitude">Latitude:</label>
+    <input type="text" id="latitude" placeholder="Enter latitude"><br>
+
+    <label for="longitude">Longitude:</label>
+    <input type="text" id="longitude" placeholder="Enter longitude"><br>
+
+    <button onclick="showLocation()">Show Custom Location</button>
+    <button onclick="showDeviceLocation()">Show Device Location on Google Maps</button>
+
+    <div id="map"></div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOPoxg8rTqVa6ngpRNOSXTodPPDZMsJ2w&callback=initMap" async defer></script>
+
+    <script>
+        let map, marker;
+
+        // Retrieve device coordinates from local storage
+        const deviceLat = parseFloat(localStorage.getItem('deviceLat')); // Retrieve device latitude
+        const deviceLng = parseFloat(localStorage.getItem('deviceLng')); // Retrieve device longitude
+
+        // Function to get the user's location
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function showPosition(position) {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            localStorage.setItem('deviceLat', lat);
+            localStorage.setItem('deviceLng', lng);
+            initMap(); // Initialize map with the current position
+        }
+
+        function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    alert("User denied the request for Geolocation.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    alert("Location information is unavailable.");
+                    break;
+                case error.TIMEOUT:
+                    alert("The request to get user location timed out.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    alert("An unknown error occurred.");
+                    break;
+            }
+        }
+
+        // Initialize and add the map
+        function initMap() {
+            const defaultLocation = { lat: deviceLat || 30.766301, lng: deviceLng || 76.576126 }; // Fallback to default values
+
+            // Create the map centered at the device location
+            map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 13,
+                center: defaultLocation,
+            });
+
+            // Marker for the device location
+            marker = new google.maps.Marker({
+                position: defaultLocation,
+                map: map,
+                title: `Latitude: ${deviceLat}, Longitude: ${deviceLng}`,
+            });
+        }
+
+        // Show custom location based on user input
+        function showLocation() {
+            const lat = parseFloat(document.getElementById('latitude').value);
+            const lng = parseFloat(document.getElementById('longitude').value);
+
+            const customLocation = { lat: lat, lng: lng };
+
+            // Update the map center and marker position
+            map.setCenter(customLocation);
+            marker.setPosition(customLocation);
+            marker.setTitle(`Latitude: ${lat}, Longitude: ${lng}`);
+        }
+
+        // Show device location on Google Maps
+        function showDeviceLocation() {
+            // Validate latitude and longitude values
+            if (isNaN(deviceLat) || isNaN(deviceLng)) {
+                alert("Device location not set. Please check your app.js file.");
+                return;
+            }
+
+            const deviceLocation = { lat: deviceLat, lng: deviceLng };
+
+            // Center the map on the device location
+            map.setCenter(deviceLocation);
+            marker.setPosition(deviceLocation);
+            marker.setTitle(`Latitude: ${deviceLat}, Longitude: ${deviceLng}`);
+
+            // Construct the URL to show the device location in Google Maps
+            const url = `https://www.google.com/maps/search/?api=1&query=${deviceLat},${deviceLng}`;
+            window.open(url, '_blank'); // Open in a new tab
+        }
+
+        // Call getLocation when the page loads to set device coordinates
+        window.onload = getLocation;
+    </script>
+</body>
+</html>
