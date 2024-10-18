@@ -1,25 +1,46 @@
-body {
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro:200');
+
+body  {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
     color: #333;
     text-align: center;
     padding: 50px;
-  }
-  
-  h1 {
+    background-image: url('https://static.pexels.com/photos/414171/pexels-photo-414171.jpeg');
+    background-size: cover;
+    -webkit-animation: slidein 100s;
+    animation: slidein 100s;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;
+    animation-direction: alternate;
+}
+
+@-webkit-keyframes slidein {
+    from {background-position: top; background-size:3000px;}
+    to {background-position: -100px 0px;background-size:2750px;}
+}
+
+@keyframes slidein {
+    from {background-position: top;background-size:3000px;}
+    to {background-position: -100px 0px;background-size:2750px;}
+}
+
+h1 {
     color: #4CAF50;
-  }
-  
-  p {
+}
+
+p {
     font-size: 18px;
     margin: 10px 0;
-  }
-  
-  span {
+}
+
+span {
     font-weight: bold;
-  }
-  
-  .login-container {
+}
+
+.login-container {
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
@@ -28,30 +49,50 @@ body {
     max-width: 300px;
     width: 100%;
     margin: auto;
-  }
-  
-  input[type="email"], input[type="password"] {
+}
+
+input[type="email"], input[type="password"] {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
-  }
-  
-  button {
+}
+
+button {
     padding: 10px 20px;
     background-color: #4CAF50;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-  }
-  
-  button:hover {
+}
+
+button:hover {
     background-color: #45a049;
-  }
-  
-  #error-message {
+}
+
+#error-message {
     color: red;
-  }
-  
+}
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(75, 75, 250, 0.3);
+    border-radius: 3px;
+}
+
+.center h1 {
+    text-align: center;
+    color: white;
+    font-family: 'Source Code Pro', monospace;
+    text-transform: uppercase;
+}
