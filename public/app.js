@@ -27,6 +27,22 @@ const devicelocation = document.getElementById('location');
 const sensorDataBtn = document.getElementById('sensorDataBtn');
 const dataTitle = document.getElementById('dataTitle');
 const dataContent = document.getElementById('dataContent');
+const buttons = document.querySelectorAll(".button-container button");
+const dataDisplay = document.getElementById("dataDisplay");
+const allowedButtons = ["carInfoBtn", "sensorDataBtn"];
+const toggleButton = "location"; // Button to toggle visibility
+
+buttons.forEach(button => {
+  button.addEventListener("click", () => {
+    if (allowedButtons.includes(button.id)) {
+      dataDisplay.style.display = "block"; // Show dataDisplay
+    } else if (button.id === toggleButton) {
+      dataDisplay.style.display = dataDisplay.style.display === "block" ? "none" : "block"; // Toggle visibility
+    }
+  });
+});
+
+
 
 
 logoutBtn.addEventListener('click', handleLogout);
@@ -35,9 +51,48 @@ carInfoBtn.addEventListener('click', () => {
     fetchAndDisplayCarInfo('CarInfo');
 });
 devicelocation.addEventListener('click', () => {
-    clearSensorDataInterval();
-    window.location.href = "map.html"; 
+  clearSensorDataInterval();
+
+  openMapModal(); 
 });
+
+let map, marker;
+
+        // Retrieve device coordinates from local storage
+        const deviceLat = parseFloat(localStorage.getItem('deviceLat')) || 30.766301;
+        const deviceLng = parseFloat(localStorage.getItem('deviceLng')) || 76.576126;
+
+        function initMap() {
+            const deviceLocation = { lat: deviceLat, lng: deviceLng };
+
+            map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 13,
+                center: deviceLocation,
+            });
+
+            marker = new google.maps.Marker({
+                position: deviceLocation,
+                map: map,
+                title: `Latitude: ${deviceLat}, Longitude: ${deviceLng}`,
+            });
+        }
+
+        function openMapModal() {
+            document.getElementById("mapModal").style.display = "flex"; // Show modal
+            initMap(); // Initialize the map
+        }
+        function closeMapModal() {
+          document.getElementById("mapModal").style.display = "none"; // Hide modal
+      }
+        
+
+        // Close modal if clicking outside content box
+        window.onclick = function(event) {
+            const modal = document.getElementById("mapModal");
+            if (event.target === modal) {
+                closeMapModal();
+            }
+        }
 
 sensorDataBtn.addEventListener('click', startAutoUpdateSensorData);
 let sensorDataInterval = null;

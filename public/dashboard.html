@@ -29,11 +29,30 @@
       <h2 id="dataTitle"></h2>
       <div id="dataContent"></div>
       
+    </div>
+    <div id="mapModal" class="modal">
+      <div class="modal-content">
+         
+          <div id="map"></div> <!-- Map container -->
+      </div>
+    </div>
+
+    <div class="text" id= "detail">
+      <p>RADARS is an IoT-based system designed to detect road accidents in remote and mountainous regions, ensuring timely assistance.</p>
+
+      <p>It identifies four types of accidents—submersion in water, vehicle fires, collisions, and rollovers—using various sensors.</p>
       
+      <p>The system automatically sends distress alerts to hospitals, police stations, ambulances, and victims' families.</p>
+      
+      <p>Unlike conventional solutions, RADARS operates without internet dependency, utilizing LoRa, GPRS, and GSM for reliable communication.</p>
+      
+      <p>By providing swift emergency response, RADARS aims to reduce fatalities in accident-prone, isolated areas.</p>
+
     </div>
   </main>
 
   <!-- Import Firebase and App JS -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOPoxg8rTqVa6ngpRNOSXTodPPDZMsJ2w&callback=initMap" async defer></script>
   <script type="module" src="app.js"></script>
 </body>
 </html>
